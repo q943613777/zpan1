@@ -1,0 +1,32 @@
+name = "zpan1"
+main = "./workers/bootstrap.ts"
+compatibility_date = "2026-04-12"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*", "/dl/*", "/s/*"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "zpan-db"
+database_id = "50b894d7-27f2-461e-90b4-58b7c687220d"
+migrations_dir = "./migrations"
+
+[observability]
+enabled = true
+
+# ----------------------------------------------------------------------------
+# Staging environment — used by non-production branch builds.
+# CLOUDFLARE_ENV=staging is set automatically in the build script.
+# Workers Builds creates preview versions on the same zpan Worker
+# but with staging D1 binding.
+# ----------------------------------------------------------------------------
+[env.staging]
+
+[[env.staging.d1_databases]]
+binding = "DB"
+database_name = "zpan-db-staging"
+database_id = "a9197d7a-6524-42f0-b646-e714dcb30b3b"
+migrations_dir = "./migrations"
